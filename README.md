@@ -67,7 +67,6 @@
       color:#777;
     }
 
-    /* Shake animation */
     .shake{
       animation: shake 0.28s linear;
     }
@@ -79,7 +78,6 @@
       100%{ transform: translateX(0); }
     }
 
-    /* Floating hearts */
     .heart{
       position:fixed;
       bottom:-30px;
@@ -127,10 +125,10 @@
     const btnArea = document.getElementById("btnArea");
     const beg = document.getElementById("beg");
 
-    // 🎶 Raindance – Dave ft Tems (YouTube)
-    const songLink = "https://www.youtube.com/watch?v=Z8nH0mRz6nM";
+    // 🎵 Apple Music (Raindance – Dave ft Tems)
+    const songLink = "https://music.apple.com/search?term=Dave%20Raindance%20Tems";
 
-    // Floating hearts
+    // floating hearts
     let heartInterval = setInterval(makeHeart, 450);
     function makeHeart(){
       const h = document.createElement("div");
@@ -144,7 +142,7 @@
       setTimeout(() => h.remove(), duration * 1000);
     }
 
-    // ✅ YES: open YouTube FIRST, then update page
+    // YES = open Apple Music immediately
     yesBtn.addEventListener("click", () => {
       window.open(songLink, "_blank");
 
@@ -155,7 +153,7 @@
       `;
     });
 
-    // NO runs away + shakes + begs
+    // NO runs away
     noBtn.addEventListener("mouseenter", tryNo);
     noBtn.addEventListener("touchstart", (e) => {
       e.preventDefault();
