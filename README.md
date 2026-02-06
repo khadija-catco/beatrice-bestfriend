@@ -126,7 +126,7 @@
     const beg = document.getElementById("beg");
 
     // 🎵 Apple Music (Raindance – Dave ft Tems)
-    const songLink = "https://music.apple.com/search?term=Dave%20Raindance%20Tems";
+    const songLink = "https://music.apple.com/us/song/raindance/1847992612";
 
     // floating hearts
     let heartInterval = setInterval(makeHeart, 450);
