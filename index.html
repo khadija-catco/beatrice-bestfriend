@@ -1,200 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Be My Bestfriend Again 💖</title>
 
   <style>
-    body{
-      margin:0;
-      height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:#ffd6e8;
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ffd6e8;
       font-family: Arial, sans-serif;
-      overflow:hidden;
+      overflow: hidden;
     }
 
-    .card{
-      background:#fff;
-      width:min(440px, 92vw);
-      padding:38px 26px;
-      border-radius:22px;
+    .card {
+      background: white;
+      padding: 36px 26px;
+      width: min(420px, 90vw);
+      border-radius: 22px;
+      text-align: center;
       box-shadow: 0 12px 30px rgba(0,0,0,0.18);
-      text-align:center;
-      position:relative;
-      z-index:2;
+      position: relative;
+      z-index: 2;
     }
 
-    h2{ margin:0 0 10px 0; font-size:22px; }
-    p{ margin:0 0 18px 0; font-size:16px; line-height:1.4; }
-
-    .buttons{
-      position:relative;
-      height:130px;
-      margin-top:10px;
+    h2 {
+      margin-bottom: 10px;
+      font-size: 22px;
     }
 
-    button{
-      padding:12px 22px;
-      border:none;
-      border-radius:999px;
-      font-size:16px;
-      cursor:pointer;
-      user-select:none;
+    p {
+      font-size: 16px;
+      margin-bottom: 18px;
     }
 
-    #yesBtn{
+    .buttons {
+      position: relative;
+      height: 120px;
+    }
+
+    button {
+      padding: 12px 22px;
+      border: none;
+      border-radius: 999px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #yes {
       background: hotpink;
-      color:#fff;
-      box-shadow: 0 8px 18px rgba(255, 0, 128, 0.25);
-    }
-    #yesBtn:active{ transform: scale(0.98); }
-
-    #noBtn{
-      background:#e9e9e9;
-      color:#444;
-      position:absolute;
-      left:58%;
-      top:60px;
+      color: white;
+      box-shadow: 0 8px 18px rgba(255,0,128,0.25);
     }
 
-    .tiny{
-      margin-top:14px;
-      font-size:12px;
-      color:#777;
+    #no {
+      background: #eee;
+      position: absolute;
+      left: 55%;
+      top: 50px;
     }
 
-    /* Shake animation for NO */
-    .shake{
-      animation: shake 0.28s linear;
-    }
-    @keyframes shake{
-      0%{ transform: translateX(0); }
-      25%{ transform: translateX(-6px); }
-      50%{ transform: translateX(6px); }
-      75%{ transform: translateX(-6px); }
-      100%{ transform: translateX(0); }
-    }
-
-    /* Floating hearts */
-    .heart{
-      position:fixed;
-      bottom:-30px;
-      font-size:18px;
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 20px;
       animation: floatUp linear forwards;
-      z-index:1;
-      opacity:0.85;
-      pointer-events:none;
+      pointer-events: none;
+      opacity: 0.8;
     }
-    @keyframes floatUp{
-      to{
+
+    @keyframes floatUp {
+      to {
         transform: translateY(-110vh);
-        opacity:0;
+        opacity: 0;
       }
     }
 
-    /* Little “Beatrice please” line */
-    #beg{
-      min-height:18px;
-      margin-top:10px;
-      font-size:13px;
-      color:#ff2f92;
-      font-weight:600;
+    .beg {
+      font-size: 13px;
+      color: #ff2f92;
+      margin-top: 10px;
+      font-weight: 600;
     }
   </style>
 </head>
 
 <body>
+
   <div class="card" id="card">
     <h2>Dear Beatrice S Bangura 💗</h2>
-    <p>Will you be my Bestfriend<br><b>again?</b></p>
+    <p>Will you be my Bestfriend <b>again?</b></p>
 
-    <div class="buttons" id="btnArea">
-      <button id="yesBtn">Yes 💖</button>
-      <button id="noBtn">No 😒</button>
+    <div class="buttons" id="area">
+      <button id="yes">Yes 💖</button>
+      <button id="no">No 😒</button>
     </div>
 
-    <div id="beg"></div>
-    <div class="tiny">Choose wisely 😭</div>
+    <div class="beg" id="beg"></div>
   </div>
 
   <script>
+    const yes = document.getElementById("yes");
+    const no = document.getElementById("no");
     const card = document.getElementById("card");
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    const btnArea = document.getElementById("btnArea");
+    const area = document.getElementById("area");
     const beg = document.getElementById("beg");
 
-    // ✅ YouTube link (Raindance)
-    const songLink = "https://www.youtube.com/watch?v=Z8nH0mRz6nM";
+    const song = "https://music.apple.com/us/album/raindance/1847992481?i=1847992612";
 
-    // Floating hearts generator
-    let heartInterval = setInterval(makeHeart, 450);
-    function makeHeart(){
+    // floating hearts
+    setInterval(() => {
       const h = document.createElement("div");
       h.className = "heart";
       h.textContent = Math.random() > 0.5 ? "💗" : "💕";
-
-      // random x position
       h.style.left = Math.random() * 100 + "vw";
-
-      // random speed + size
-      const duration = 4 + Math.random() * 3; // 4–7s
-      h.style.animationDuration = duration + "s";
-      h.style.fontSize = (14 + Math.random()*18) + "px";
-
+      const d = 4 + Math.random() * 3;
+      h.style.animationDuration = d + "s";
       document.body.appendChild(h);
-      setTimeout(() => h.remove(), duration * 1000);
-    }
+      setTimeout(() => h.remove(), d * 1000);
+    }, 500);
 
-    // YES = show message + open song
-    yesBtn.addEventListener("click", () => {
-      // make hearts faster for drama
-      clearInterval(heartInterval);
-      heartInterval = setInterval(makeHeart, 220);
-
+    // YES → redirect to Apple Music
+    yes.onclick = () => {
       card.innerHTML = `
         <h2>She said YES 🥹💕</h2>
-        <p>Bestfriends again.<br>Forever this time 🤞🏽💗</p>
-        <p class="tiny">This song is for you 🎶💖</p>
+        <p>Bestfriends again.<br>Forever 🤞🏽💗</p>
+        <p>Opening our song 🎶</p>
       `;
-
       setTimeout(() => {
-        window.open(songLink, "_blank");
-      }, 650);
-    });
+        window.location.href = song;
+      }, 800);
+    };
 
-    // NO runs away + shakes + begs
-    noBtn.addEventListener("mouseenter", tryNo);
-    noBtn.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      tryNo();
-    }, { passive:false });
-
-    function tryNo(){
+    // NO runs away
+    function moveNo() {
+      const maxX = area.offsetWidth - no.offsetWidth;
+      const maxY = area.offsetHeight - no.offsetHeight;
+      no.style.left = Math.random() * maxX + "px";
+      no.style.top = Math.random() * maxY + "px";
       beg.textContent = "Beatrice please 😭 just press YES 💗";
-      noBtn.classList.remove("shake");
-      void noBtn.offsetWidth; // reset animation
-      noBtn.classList.add("shake");
+    }
+
+    no.onmouseenter = moveNo;
+    no.ontouchstart = (e) => {
+      e.preventDefault();
       moveNo();
-    }
-
-    function moveNo(){
-      const areaRect = btnArea.getBoundingClientRect();
-      const btnRect = noBtn.getBoundingClientRect();
-
-      const maxX = areaRect.width - btnRect.width;
-      const maxY = areaRect.height - btnRect.height;
-
-      const x = Math.random() * Math.max(0, maxX);
-      const y = Math.random() * Math.max(0, maxY);
-
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top = `${y}px`;
-    }
+    };
   </script>
+
 </body>
 </html>
